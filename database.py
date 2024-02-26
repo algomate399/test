@@ -3,21 +3,21 @@ import requests
 from datetime import datetime
 
 
-class NSE_Session:
-    def __init__(self, symbol,timeout=10):
-        self.__url = "https://www.nseindia.com/api/option-chain-indices?symbol={}".format(symbol)
-        self.__session = requests.sessions.Session()
-        self.__session.headers = {
-            "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0",
-            "Accept": "*/*", "Accept-Language": "en-US,en;q=0.5"}
-        self.__timeout = timeout
-        self.__session.get("https://www.nseindia.com/option-chain", timeout=self.__timeout)
+class NSE_SESSION:
+    def __init__(self):
+        self.headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36',
+            'accept-language': 'en,gu;q=0.9,hi;q=0.8',
+            'accept-encoding': 'gzip, deflate, br'}
+        self.cook_url = "https://www.nseindia.com/option-chain"
+        self.session = requests.Session()
+        self.cookies = self.session.get(self.cook_url, headers=self.headers , timeout = 5).cookies
 
-    def get_expiry(self):
+    def GetExpiry(self,indices):
+        url = f'https://www.nseindia.com/api/option-chain-indices?symbol={indices}'
         input_format = "%d-%b-%Y"
         output_format = "%d%b%y"
         try:
-            response = self.__session.get(url=self.__url, timeout=self.__timeout)
+            response = self.session.get(url,headers=self.headers, timeout=5, cookies=self.cookies)
             if response.status_code == 200:
                 records = response.json()['records']
                 format_exp = [datetime.strptime(date, input_format).strftime(output_format).upper() for date in
@@ -28,7 +28,3 @@ class NSE_Session:
 
         except Exception as ex:
             print('Error: {}'.format(ex))
-            self.__session.get("https://www.nseindia.com/option-chain", timeout=self.__timeout)
-
-
-
