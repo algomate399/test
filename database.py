@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 class NSE_Session:
-    def __init__(self, symbol,timeout=5):
+    def __init__(self, symbol,timeout=10):
         self.__url = "https://www.nseindia.com/api/option-chain-indices?symbol={}".format(symbol)
         self.__session = requests.sessions.Session()
         self.__session.headers = {
