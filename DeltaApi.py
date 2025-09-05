@@ -47,8 +47,7 @@ def run():
     query = {"product_id": 1, "state": 'open'}
 
     response = requests.request(
-        method, url, data=payload, params=query, timeout=(3, 27), headers=req_headers , proxies = proxies
-    )
+        method, url, data=payload, params=query, timeout=(3, 27), headers=req_headers)
 
     # Place new order
     method = 'GET'
@@ -69,7 +68,8 @@ def run():
     }
 
     response = requests.request(
-        method, url, data=payload, params={}, timeout=(8, 27), headers=req_headers , proxies = proxies )
+        method, url, data=payload, params={}, timeout=(8, 27), headers=req_headers )
 
     print(response.json())
+
 
