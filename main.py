@@ -45,7 +45,7 @@ def On_connect():
             scheduler = AsyncIOScheduler(event_loop=loop)
 
             # Add tasks to the scheduler
-            scheduler.add_job(primary_task_1 , CronTrigger(hour=2 , minute=55 , timezone=timezone('Asia/Kolkata')))
+            scheduler.add_job(primary_task_1 , CronTrigger(hour=3 , minute=5 , timezone=timezone('Asia/Kolkata')))
 
             # Start the scheduler
             scheduler.start()
@@ -76,5 +76,6 @@ def get_connection_status():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 
